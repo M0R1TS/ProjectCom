@@ -1,5 +1,6 @@
 package ru.devsokovix.newprojectcom
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -29,6 +30,13 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
         db.insert("users", null, values)
 
         db.close()
+    }
+
+    fun getUser(login: String, pass: String): Boolean {
+        val db = this.readableDatabase
+
+        val result = db.rawQuery("SELECT * FROM users WHERE login = '$login' AND pass ='$pass'", null)
+        return result.moveToFirst()
     }
 
 }
